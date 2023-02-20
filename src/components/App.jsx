@@ -27,10 +27,10 @@ export function App() {
       } catch (error) {
         console.log(error);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
     }
-  }, [query, page])
+  }, [query, page, images])
 
   const onSubmit = (requestName) => {
     setQuery(requestName)
