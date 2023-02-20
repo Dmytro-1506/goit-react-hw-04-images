@@ -30,7 +30,7 @@ export function App() {
         setLoading(false);
       }
     }
-  }, [query, page, images])
+  }, [query, page])
 
   const onSubmit = (requestName) => {
     setQuery(requestName)
