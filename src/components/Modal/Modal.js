@@ -1,28 +1,20 @@
-import { Component } from 'react';
+import { useEffect } from 'react';
 
-export class Modal extends Component {
-    closeCallback = (event) => {
-        const { closeModal } = this.props;
-        if (event.key === 'Escape') {
-            closeModal();
+export function Modal({closeModal, image}) {
+    const closeCallback = (event) => {
+        if (event.key === 'Escape' || event.currentTarget === event.target) {
+                closeModal();
         }
+        window.removeEventListener('keydown', closeCallback)
     }
 
-    componentDidMount() {
-        window.addEventListener('keydown', this.closeCallback)
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('keydown', this.closeCallback)
-    }
-
-    render() {
-        const { image } = this.props;
+    useEffect(() => {
+        window.addEventListener('keydown', closeCallback)
+    }, [])
         
-        return <div className="Overlay">
-            <div className="Modal">
-                <img src={image} alt={image} />
-            </div>
+    return <div className="Overlay" onClick={closeCallback} >
+        <div className="Modal">
+            <img src={image} alt={image} />
         </div>
-    }
+    </div>
 }
