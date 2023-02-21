@@ -1,18 +1,23 @@
 import { useEffect } from 'react';
 
 export function Modal({closeModal, image}) {
-    const closeCallback = (event) => {
-        if (event.key === 'Escape' || event.currentTarget === event.target) {
-                closeModal();
+    const handleClick = (event) => {
+        if (event.target === event.currentTarget) {
+            closeModal();
         }
-        window.removeEventListener('keydown', closeCallback)
     }
 
     useEffect(() => {
+        const closeCallback = (event) => {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        }
         window.addEventListener('keydown', closeCallback)
-    }, [])
+        return () => window.removeEventListener('keydown', closeCallback)
+    }, [closeModal]);
         
-    return <div className="Overlay" onClick={closeCallback} >
+    return <div className="Overlay" onClick={handleClick} >
         <div className="Modal">
             <img src={image} alt={image} />
         </div>
